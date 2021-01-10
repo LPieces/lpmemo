@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 let store = new Vuex.Store({
     state: {
-        aHelper: new ActionHelper()
+        aHelper: new ActionHelper(),
+        isShow: false
     },
     mutations: {
 

@@ -34,33 +34,33 @@
           <li class="categories dropdown">
             <a class="current-category dropdown-toggle"
                data-toggle="dropdown">
-              全部
-              <span class="count badge"></span>
+              {{$store.state.aHelper.getCategoryName($store.state.filterCateId)}}
+              <span class="count badge">{{doFilter($store.state.filterCateId)}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="total">
+              <li class="total" @click="doFilterByCateId(-1)">
                 <a>
                   全部
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(-1)}}</span>
                 </a>
               </li>
               <li class="divider"></li>
-              <li>
+              <li @click="doFilterByCateId(0)">
                 <a>
                   工作
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(0)}}</span>
                 </a>
               </li>
-              <li>
+              <li @click="doFilterByCateId(1)">
                 <a>
                   生活
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(1)}}</span>
                 </a>
               </li>
-              <li>
+              <li @click="doFilterByCateId(2)">
                 <a>
                   学习
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(2)}}</span>
                 </a>
               </li>
             </ul>
@@ -73,15 +73,26 @@
 
 <script lang="ts">
 
+import ItemData from '@/model/ItemData';
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class MenuBar extends Vue {
 
   showAdd():void{
+    this.$store.state.transMemo = new ItemData(-1,0);
     this.$store.state.isShow = true;
   }
-  
+  doFilter(cid:number):number{
+    if(cid === -1){
+      return this.$store.state.aHelper.memoList.length;
+    }else{
+      return this.$store.state.aHelper.memoList.filter((ele:any)=>ele.categoryId === cid).length;
+    }
+  }
+  doFilterByCateId(cid:number){
+    this.$store.state.filterCateId = cid;
+  }
 }
 
 </script>

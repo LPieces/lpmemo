@@ -5,8 +5,8 @@
       <div class="memo-heading">
         <h5 class="title">{{memo.title}}</h5>
         <ul class="tools">
-          <li class="edit"></li>
-          <li class="delete"></li>
+          <li class="edit" @click="editItem"></li>
+          <li class="delete" @click="delItem"></li>
         </ul>
       </div>
       <h6 class="memo-info">
@@ -27,6 +27,14 @@
   @Component
   export default class MenuItem extends Vue {
     @Prop() memo!:ItemData;
-
+    delItem():void{
+      if(!window.confirm(`确认要删除「${this.memo.title}」的笔记吗？`)) return;
+      this.$store.state.aHelper.remove(this.memo.id);
+    }
+    editItem():void{
+      let newMemo = JSON.parse(JSON.stringify(this.memo));
+      this.$store.commit('editMemo',newMemo);
+      this.$store.state.isShow = true;
+    }
   }
 </script>

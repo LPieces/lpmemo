@@ -2,7 +2,7 @@
   <div id="app">
     <MenuBar />
     <ItemList />
-    <MemoEditor v-show="$store.state.isShow" />
+    <MemoEditor v-if="$store.state.isShow" />
   </div>
 </template>
 

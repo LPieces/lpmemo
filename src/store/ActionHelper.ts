@@ -31,9 +31,13 @@ class ActionHelper {
         return arrItem;
     }
 
-    getCategoryName(cateId:Category):string{
-        const cateName:Array<string> = ['工作','生活','学习'];
-        return cateName[cateId];
+    getCategoryName(cateId: Category): string {
+        if (cateId === -1) {
+            return '全部';
+        } else {
+            const cateName: Array<string> = ['工作', '生活', '学习'];
+            return cateName[cateId];
+        }
     }
 
     // 业务处理
@@ -61,11 +65,13 @@ class ActionHelper {
 
     // 删除
     remove(id: number): void {
-        let tempList: Array<ItemData> = this.memoList.filter((item: ItemData) => {
-            return item.id !== id;
-        });
-        this.memoList = tempList;
-        this.dataHelper.saveData(this.memoList);
+        let index: number = this.memoList.findIndex((ele) => {
+            return ele.id === id;
+        })
+        if (index > -1) {
+            this.memoList.splice(index, 1);
+            this.dataHelper.saveData(this.memoList);
+        }
     }
 }
 
